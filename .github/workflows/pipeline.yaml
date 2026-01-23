@@ -1,0 +1,56 @@
+name: digibank coe project
+
+on: 
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend:
+    name: backend workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: backend
+        run: npm install
+
+      - name: Validate backend dev Scripts
+        working-directory: backend
+        run:
+          if npm run | grep -q dev; then
+            echo "Dev Scrips exist"
+          else
+            echo "Dev Scripts do not exist" && exit 1
+          fi
+
+
+  frontend:
+    name: frontend workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: build production
+        working-directory: frontend
+        run: npm run build
+    
