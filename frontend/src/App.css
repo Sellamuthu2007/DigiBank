@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap');
+
 html, body, #root {
   height: 100%;
   margin: 0;
@@ -132,14 +134,15 @@ html, body, #root {
   box-shadow: 0 2px 8px rgba(65,105,225,0.2);
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap');
+
 #brand{
-  font-family: 'Finger Paint', cursive;
+  font-family: 'cursive';
   font-size: 4rem;
-  color: black; /* Matrix green */
+  color:black; /* Matrix green */
   text-shadow: 3px 3px 0px white;
   letter-spacing: -2px;
 }
+
 #title{
   font-family : 'Manrope', 'Inter', system-ui, sans-serif;
 }
