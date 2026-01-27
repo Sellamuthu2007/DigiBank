@@ -23,7 +23,7 @@ app.use(cors(
     credentials: true
    }
 ))
-
+app.use('/api/auth' , authRoutes)
 
 >>>>>>> 9491bd184058ac55bf1712f81fb3afd36d7f4762
 app.get('/' , (req,res) => {
@@ -33,7 +33,6 @@ app.get('/' , (req,res) => {
 <<<<<<< HEAD
 =======
 
-app.use('/api/auth' , authRoutes)
 
 
 
