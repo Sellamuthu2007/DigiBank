@@ -18,14 +18,13 @@ app.use(cors(
     credentials: true
    }
 ))
-
+app.use('/api/auth' , authRoutes)
 
 app.get('/' , (req,res) => {
     res.send("welcome to coe project");
 })
 
 
-app.use('/api/auth' , authRoutes)
 
 
 
