@@ -47,11 +47,11 @@ export default function SecondHero(){
                 </div>
                 <div className="secondHero-right">
                     <div>
-                        <div className='loginDiv'>
+                        <div className='loginDiv' onClick = {()=> navigate('/student-register')}>
                         <div>
                             <i className="bi bi-person" style = {{"fontSize":"50px"}}></i>
                         </div>
-                        <div onClick = {()=> navigate('/student-register')}>
+                        <div>
                             <div><h3 id = "title">Individual</h3></div>
                             <div><p id = "not-title">Stores crediential securely in an valid manner</p></div>
                         </div>
