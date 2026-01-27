@@ -1,0 +1,155 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+*{
+  
+  color : black;
+  margin: 0;
+  padding: 0;
+}
+.hero-section{
+  
+  top : 0;
+}
+.firstHero{
+  
+  height : 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  padding-top: 100px;
+}
+.firstHero h1{
+  font-size: 80px;
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 0;
+}
+.gradient-text{
+  background: linear-gradient(135deg, #4169e1, #9370db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.purple-text{
+  color: #9370db;
+}
+.secondHero{
+  width : 100%;
+  min-height : 100vh;
+  display: flex;
+  margin: 0;
+  padding: 0px;
+}
+.secondHero-left{
+  width : 50%;
+  padding: 20px;
+}
+.secondHero-left  div{
+  background-color: yellowgreen;
+  padding: 10px;
+}
+.secondHero-left  h1{
+  font-size : 50px;
+}
+.secondHero-left p{
+  font-family : sans-serif;
+}
+.secondHero-right{
+  display: flex;
+  flex-direction: column;
+  width : 50%;
+  padding: 20px;
+}
+.loginDiv{
+  margin-top: 50px;
+  margin-left: 100px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  width : 460px;
+  height : 120px;
+  border : black solid 2px;
+  border-radius: 20px;  
+  justify-content: space-evenly;
+}
+.loginDiv:hover{
+  cursor: pointer;
+  transform : scale(1.002);
+  transition : ease(1);
+  box-shadow: 0 0 30px black;
+}
+.loginDiv div{
+  margin-left: 10px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .secondHero {
+    flex-direction: column;
+  }
+  
+  .secondHero-left,
+  .secondHero-right {
+    width: 100%;
+    padding: 15px;
+  }
+  
+  .secondHero-left h1 {
+    font-size: 32px;
+  }
+  
+  .secondHero-left h1 span {
+    font-size: 40px !important;
+  }
+  
+  .secondHero-left h2 {
+    font-size: 18px;
+  }
+  
+  .loginDiv {
+    margin-left: 0;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+}
+
+.container{
+  width : 250px;
+  background: linear-gradient(90deg, #4169e1, #1e90ff);
+  color: black;
+  border: none;  
+  border-radius: 25px;
+  padding: 12px 3px;
+  font-size: 18px;                        
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(65,105,225,0.2);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap');
+#brand{
+  font-family: 'Finger Paint', cursive;
+  font-size: 4rem;
+  color: black; /* Matrix green */
+  text-shadow: 3px 3px 0px white;
+  letter-spacing: -2px;
+}
+#title{
+  font-family : 'Manrope', 'Inter', system-ui, sans-serif;
+}
+#not-title{
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+#right-arrow {
+  font-size: 32px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+ 
