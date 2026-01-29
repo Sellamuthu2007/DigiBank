@@ -25,7 +25,7 @@ const StudentRegister = () => {
     setForm({ ...form, otpSent: true });
     alert("OTP sent");
   };
-
+  
   const verifyOTP = () => {
     if (form.otp.length !== 6) {
       alert("Enter 6-digit OTP");
