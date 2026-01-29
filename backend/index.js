@@ -1,9 +1,4 @@
 import express from 'express'
-<<<<<<< HEAD
-
-const app = express();
-
-=======
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/AuthRoutes.js';
@@ -25,19 +20,15 @@ app.use(cors(
 ))
 app.use('/api/auth' , authRoutes)
 
->>>>>>> 9491bd184058ac55bf1712f81fb3afd36d7f4762
 app.get('/' , (req,res) => {
     res.send("welcome to coe project");
 })
 
-<<<<<<< HEAD
-=======
 
 
 
 
 
->>>>>>> 9491bd184058ac55bf1712f81fb3afd36d7f4762
 app.listen(3000 , () =>{
     console.log(`Server is running on http://localhost:3000`);
 })

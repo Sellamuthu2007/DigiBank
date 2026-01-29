@@ -1,6 +1,5 @@
 import user from '../models/UserModel.js';
 import otpmodel from '../models/Otp.js';
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import generateOtp from '../utils/OtpGenerator.js';
 
@@ -24,6 +23,18 @@ export const register = async (req , res) => {
             console.log('Phone already exists:', phone);
             return res.status(400).json({message : 'Phone number already exists'});
         }
+
+        // check if it has any otp with same email
+        while(true){
+            const already_otp_exist = await otpmodel.findOne({email});
+            if(already_otp_exist){
+                await otpmodel.deleteOne({email});
+            }
+            else{
+                break;
+            }
+        } 
+
 
         // create new user
         console.log('Creating new user object...');
@@ -69,18 +80,25 @@ export const verifyOtp = async (req , res) => {
 
     try{
         // find user by phone number
-        const finduser = await otpmodel.findOne({ email });
-        if(!finduser){
+        const findotp = await otpmodel.findOne({ email });
+        const findUser = await user.findOne({ email });
+
+        if(!findUser){
             return res.status(400).json({message : "user not found"});
+        } 
+
+        if(!findotp){
+            return res.status(400).json({message : "otp not found"});
         }
         
         //verify otp
-        if(finduser.expiresAt < Date.now()){
+        if(findotp.expiresAt < Date.now()){
+            await otpmodel.deleteOne({email});
             return res.status(400).json({message: "otp expired"});
         }
 
         //check otp
-        if(finduser.otp !== otp){
+        if(findotp.otp !== otp){
             return res.status(400).json({message: "invalid otp"});
         }
 
@@ -91,7 +109,14 @@ export const verifyOtp = async (req , res) => {
 
           await otpmodel.deleteOne({ email }); // Removes old OTP if exists
 
-        return res.status(200).json({message: "otp verified successfully"});
+          const token = jwt.sign(
+            {userId : findUser._id},
+            process.env.JWT_SECRET,
+            {expiresIn: '1h'},
+        )
+         
+        console.log(token);
+        return res.status(200).json({message: "otp verified successfully" , token : token});
     }
     catch(err){
         return res.status(500).json({message: "server error"});
