@@ -5,20 +5,20 @@ import "../../Styles/loginForm.css";
 
 export default function UserLogin() {
   let [email, setEmail] = useState("");
-  let [pwd1, setPwd1] = useState("");
+  let [OTP, setOTP] = useState("");
 
   let navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (!email || !pwd1) {
+    if (!email || !OTP) {
       alert("Please fill all the fields");
       return;
     }
 
     const data = {
       email: email,
-      password: pwd1,
+      OTP : OTP,
     };
 
     try {
@@ -60,14 +60,14 @@ export default function UserLogin() {
         </div>
         <div className="formElements" id="login1">
           <div>
-            <h5>Password</h5>
+            <h5>Enter OTP</h5>
           </div>
           <div>
             <input
               type="password"
-              name="pwd1"
-              value={pwd1}
-              onChange={(e) => setPwd1(e.target.value)}
+              name="OTP"
+              value={OTP}
+              onChange={(e) => setOTP(e.target.value)}
             />
           </div>
         </div>

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 
-export default function SecondHero() {
+export default function LandingPage() {
   const navigate = useNavigate();
   // Scroll handler for smooth scrolling
   const handleScroll = (sectionId) => {
