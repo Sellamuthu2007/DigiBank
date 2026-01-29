@@ -69,7 +69,7 @@ const StudentRegister = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className = 'student'>
       <h2>Student Registration</h2>
       <p>Certificates are issued only by verified institutions.</p>
 

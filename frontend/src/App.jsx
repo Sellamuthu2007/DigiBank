@@ -2,17 +2,13 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import SecondHero from './pages/secondHero'
-import StudentRegister from './auth/student/StudentRegister'
-
+import LandingPage from './pages/landingPage'
 function App() {
-
   return (
     <>
-      <SecondHero/>
-      <StudentRegister/>
+      <LandingPage/>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
