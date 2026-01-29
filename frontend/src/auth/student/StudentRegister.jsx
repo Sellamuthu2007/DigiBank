@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "../../Styles/StudentRegiter.css";
 
 const StudentRegister = () => {
@@ -17,44 +18,65 @@ const StudentRegister = () => {
     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
   };
 
-  const sendOTP = () => {
-    if (form.mobile.length !== 10) {
-      alert("Enter valid mobile number");
+  const sendOTP = async () => {
+    if (!form.email || !form.mobile || !form.name) {
+      alert("Fill all required fields");
       return;
     }
-    setForm({ ...form, otpSent: true });
-    alert("OTP sent");
+
+    try {
+      await axios.post("http://localhost:3000/api/auth/register", {
+        username: form.name,
+        email: form.email,
+        phone: form.mobile,
+      });
+
+      setForm({ ...form, otpSent: true });
+      alert("OTP sent (check backend console)");
+    } catch (err) {
+      alert(err.response?.data?.message || "OTP send failed");
+    }
   };
-  
-  const verifyOTP = () => {
+
+  const verifyOTP = async () => {
     if (form.otp.length !== 6) {
       alert("Enter 6-digit OTP");
       return;
     }
-    setForm({ ...form, otpVerified: true });
-    alert("Mobile verified");
+
+    try {
+      await axios.post("http://localhost:3000/api/auth/verify-otp", {
+        email: form.email,
+        otp: form.otp,
+      });
+
+      setForm({ ...form, otpVerified: true });
+      alert("OTP verified");
+    } catch (err) {
+      alert("Invalid OTP" + (err.response?.data?.message || ""));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!form.otpVerified || !form.agree) {
-      alert("Please verify OTP and agree to terms");
+      alert("Verify OTP & accept terms");
       return;
     }
 
-    alert("Account created successfully!");
+    alert("Student registered successfully!");
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className = 'student'>
       <h2>Student Registration</h2>
       <p>Certificates are issued only by verified institutions.</p>
 
       <input
         type="text"
         name="name"
-        placeholder="Full name"
+        placeholder="Full Name"
         value={form.name}
         onChange={handleChange}
         required
@@ -72,9 +94,10 @@ const StudentRegister = () => {
       <input
         type="email"
         name="email"
-        placeholder="Email (optional)"
+        placeholder="Email"
         value={form.email}
         onChange={handleChange}
+        required
       />
 
       {!form.otpSent ? (
@@ -90,13 +113,8 @@ const StudentRegister = () => {
             value={form.otp}
             onChange={handleChange}
           />
-
-          <button
-            type="button"
-            onClick={verifyOTP}
-            disabled={form.otpVerified}
-          >
-            {form.otpVerified ? "Verified ✓" : "Verify OTP"}
+          <button type="button" onClick={verifyOTP}>
+            Verify OTP
           </button>
         </>
       )}

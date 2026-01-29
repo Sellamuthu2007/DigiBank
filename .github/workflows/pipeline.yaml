@@ -1,11 +1,11 @@
 name: digibank coe project
 
-on: 
+on:
   push:
-    branches: [main , master]
+    branches: [main, master]
 
   pull_request:
-    branches: [main , master]
+    branches: [main, master]
 
 jobs:
   backend:
@@ -18,7 +18,7 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         working-directory: backend
@@ -33,7 +33,6 @@ jobs:
             echo "Dev Scripts do not exist" && exit 1
           fi
 
-
   frontend:
     name: frontend workflow
     runs-on: ubuntu-latest
@@ -44,7 +43,7 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         working-directory: frontend
@@ -53,4 +52,3 @@ jobs:
       - name: build production
         working-directory: frontend
         run: npm run build
-    
