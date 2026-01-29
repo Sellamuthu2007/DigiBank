@@ -3,10 +3,10 @@ import otpmodel from '../models/Otp.js';
 import jwt from 'jsonwebtoken';
 import generateOtp from '../utils/OtpGenerator.js';
 
-export const register = async (req, res) => {
-  const { username, email, phone } = req.body;
 
-export const register = async (req , res) => {
+
+export const register = async (
+    req , res) => {
     const {username , email , phone } = req.body;
 
     try{
@@ -71,6 +71,14 @@ export const register = async (req , res) => {
 
         return res.status(201).json({message : "user registered successfully" , user : usercreated , otp : otp_data});
     }
+    catch(error){
+        console.log('Error during registration:', error);
+        return res.status(500).json({message : 'Server error'});
+    }
+};
+
+export const verifyOtp = async (req , res) => {
+  const { email, otp } = req.body;
 
     // Check for existing phone
     console.log("Checking existing phone:", phone);
@@ -79,18 +87,6 @@ export const register = async (req , res) => {
       console.log("Phone already exists:", phone);
       return res.status(400).json({ message: "Phone number already exists" });
     }
-
-    // create new user
-    console.log("Creating new user object...");
-    const newUser = new user({
-      username,
-      email,
-      phone,
-      isverified: false,
-    });
-
-    console.log("Generating OTP...");
-    const otp = generateOtp();
 
     try{
         // find user by phone number
@@ -131,23 +127,7 @@ export const register = async (req , res) => {
         console.log(token);
         return res.status(200).json({message: "otp verified successfully" , token : token});
     }
-
-    //verify otp
-    if (finduser.expiresAt < Date.now()) {
-      return res.status(400).json({ message: "otp expired" });
-    }
-
-    //check otp
-    if (finduser.otp !== otp) {
-      return res.status(400).json({ message: "invalid otp" });
-    }
-
-    await user.updateOne({ email }, { isverified: true });
-
-    await otpmodel.deleteOne({ email }); // Removes old OTP if exists
-
-    return res.status(200).json({ message: "otp verified successfully" });
-  } catch (err) {
+  catch (err) {
     return res.status(500).json({ message: "server error" });
   }
 };
