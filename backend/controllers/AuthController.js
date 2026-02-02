@@ -80,13 +80,13 @@ export const register = async (
 export const verifyOtp = async (req , res) => {
   const { email, otp } = req.body;
 
-    // Check for existing phone
-    console.log("Checking existing phone:", phone);
-    const existingPhone = await user.findOne({ phone });
-    if (existingPhone) {
-      console.log("Phone already exists:", phone);
-      return res.status(400).json({ message: "Phone number already exists" });
-    }
+    // // Check for existing phone
+    // console.log("Checking existing phone:", phone);
+    // const existingPhone = await user.findOne({ phone });
+    // if (existingPhone) {
+    //   console.log("Phone already exists:", phone);
+    //   return res.status(400).json({ message: "Phone number already exists" });
+    // }
 
     try{
         // find user by phone number
