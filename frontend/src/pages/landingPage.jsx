@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 
@@ -113,7 +112,7 @@ export default function LandingPage() {
                 </div>
                 <div>
                   <i
-                    class="bi bi-arrow-right-circle"
+                    className="bi bi-arrow-right-circle"
                     style={{ fontSize: "30px" }}
                   ></i>
                 </div>
@@ -139,7 +138,7 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div>
-                  <i class="bi bi-arrow-right-circle" id="right-arrow"></i>
+                  <i className="bi bi-arrow-right-circle" id="right-arrow"></i>
                 </div>
               </div>
               <div
@@ -158,7 +157,7 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div>
-                  <i class="bi bi-arrow-right-circle" id="right-arrow"></i>
+                  <i className="bi bi-arrow-right-circle" id="right-arrow"></i>
                 </div>
               </div>
             </div>

@@ -1,13 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import LandingPage from './pages/landingPage'
+import SecondHero from "./pages/landingPage.jsx";
+import Notfound from "./pages/NotFound.jsx";
+import { BrowserRouter as Router , Routes , Route } from 'react-router-dom';
+import InstitutionRegister from "./auth/student/InstitutionRegister.jsx";
+import StudentRegister from "./auth/student/StudentRegister.jsx";
+import UserLogin from "./auth/student/userLogin.jsx";
+import OrganizationRegister from "./auth/student/OrganizationRegister.jsx";
+import Student_dashboard from "./pages/Student_page/Student_dashboard.jsx";
+
 function App() {
   return (
-    <>
-      <LandingPage/>
-    </>
+   <Router>
+      <Routes>
+        <Route path='/' element={<SecondHero/>} errorElement={<Notfound/>}/>
+        <Route path='/student-register' element={<StudentRegister/>}/>
+        <Route path='/institution-register' element={<InstitutionRegister/>}/>
+        <Route path='/user-login' element={<UserLogin/>}/>
+        <Route path='/organization-register' element={<OrganizationRegister/>}/>
+        <Route path='/student-dashboard' element={<Student_dashboard/>}/>
+      </Routes>
+   </Router>
   );
 }
 
