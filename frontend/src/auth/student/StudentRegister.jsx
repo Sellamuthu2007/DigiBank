@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../../Styles/StudentRegiter.css";
+import { useNavigate } from "react-router-dom";
 
 const StudentRegister = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     mobile: "",
@@ -45,10 +47,18 @@ const StudentRegister = () => {
     }
 
     try {
-      await axios.post("http://localhost:3000/api/auth/verify-otp", {
+      const response = await axios.post("http://localhost:3000/api/auth/verify-otp", {
         email: form.email,
         otp: form.otp,
       });
+
+     
+
+      if(response.status === 200){
+        console.log("OTP verified and token stored");
+      }
+
+      localStorage.setItem("token", response.data.token);
 
       setForm({ ...form, otpVerified: true });
       alert("OTP verified");
@@ -64,6 +74,8 @@ const StudentRegister = () => {
       alert("Verify OTP & accept terms");
       return;
     }
+
+    navigate("/student-dashboard");
 
     alert("Student registered successfully!");
   };
