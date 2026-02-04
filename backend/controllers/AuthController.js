@@ -90,16 +90,8 @@ export const register = async (
 export const verifyOtp = async (req , res) => {
   const { email, otp } = req.body;
 
-    // // Check for existing phone
-    // console.log("Checking existing phone:", phone);
-    // const existingPhone = await user.findOne({ phone });
-    // if (existingPhone) {
-    //   console.log("Phone already exists:", phone);
-    //   return res.status(400).json({ message: "Phone number already exists" });
-    // }
-
     try{
-        // find user by phone number
+        // find user by email
         const findotp = await otpmodel.findOne({ email });
         const findUser = await user.findOne({ email });
 
@@ -118,19 +110,17 @@ export const verifyOtp = async (req , res) => {
         }
 
         //check otp
-        if(findotp.otp !== otp){
+        if(String(findotp.otp) !== String(otp)){
             return res.status(400).json({message: "invalid otp"});
         }
 
-    console.log("Saving OTP to database...");
-    const otp_data = await otpmodel.create(newOtp);
-    console.log("OTP saved successfully");
-
-    console.log(`OTP for ${email}: ${otp}`);
+         //otp is valid , update user isverified to true
+         await user.updateOne({email } , {isverified : true});
+         await otpmodel.deleteOne({email});
 
           const token = jwt.sign(
             {userId : findUser._id},
-            process.env.JWT_SECRET,
+            process.env.JWT_SECRET || "fallback_secret",
             {expiresIn: '1h'},
         )
          
