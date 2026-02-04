@@ -1,33 +1,22 @@
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER, 
-        pass: process.env.EMAIL_PASS, 
-    }
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
 });
 
 const sendOtpEmail = async (to, otp) => {
-    const mailContent = {
-        from: process.env.EMAIL_USER,
-        to,
-        subject: 'Your OTP to Login into DigiBank',
-        text: `Your OTP: ${otp}. OTP will expire within 10 minutes`,
-    };
-    try {
-        const info = await transporter.sendMail(mailContent);
-        console.log(`Nodemailer response:`, info);
-        if (info.accepted && info.accepted.length > 0) {
-            console.log(`OTP email sent to: ${to}`);
-        } else {
-            console.log(`OTP email NOT accepted by server for: ${to}`);
-        }
-    } catch (error) {
-        console.log(`Error while sending OTP:`, error);
-        throw error;
-    }
-}
+  await transporter.sendMail({
+    from: `"NodeMail" <${process.env.EMAIL_USER}>`,
+    to,
+    subject: "NodeMail | DigiBank OTP Verification",
+    html: `<h2>Your OTP is <b>${otp}</b></h2><p>Valid for 10 minutes</p>`,
+  });
+};
 
 export default sendOtpEmail;
-
