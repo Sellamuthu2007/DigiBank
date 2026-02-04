@@ -44,6 +44,7 @@ export const register = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
 export const verifyOtp = async (req, res) => {
   const { email, otp } = req.body;
 
@@ -59,7 +60,7 @@ export const verifyOtp = async (req, res) => {
       return res.status(400).json({ message: "OTP expired" });
     }
 
-    if (otpRecord.otp !== otp.toString()) {
+    if (String(otpRecord.otp) !== String(otp)) {
       return res.status(400).json({ message: "Invalid OTP" });
     }
 
@@ -72,7 +73,7 @@ export const verifyOtp = async (req, res) => {
 
     const token = jwt.sign(
       { userId: user._id },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET || "fallback_secret",
       { expiresIn: "1h" }
     );
 
