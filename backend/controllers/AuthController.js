@@ -2,7 +2,7 @@ import user from '../models/UserModel.js';
 import otpmodel from '../models/Otp.js';
 import jwt from 'jsonwebtoken';
 import generateOtp from '../utils/OtpGenerator.js';
-
+import sendOtpEmail from '../utils/OtpSender.js';
 
 
 export const register = async (
@@ -62,6 +62,16 @@ export const register = async (
         console.log('Saving OTP to database...');
         const otp_data = await otpmodel.create(newOtp);
         console.log('OTP saved successfully');
+
+        // Send OTP email to user
+        try {
+            await sendOtpEmail(email, otp);
+
+            console.log('OTP email sent successfully');
+        } catch (emailErr) {
+            console.error('Failed to send OTP email:', emailErr);
+            // Optionally, you can return an error or continue
+        }
 
         console.log(`OTP for ${email}: ${otp}`);
 
