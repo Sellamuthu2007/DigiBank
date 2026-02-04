@@ -2,10 +2,10 @@ import './App.css'
 import SecondHero from "./pages/landingPage.jsx";
 import Notfound from "./pages/NotFound.jsx";
 import { BrowserRouter as Router , Routes , Route } from 'react-router-dom';
-import InstitutionRegister from "./auth/student/InstitutionRegister.jsx";
+import InstitutionRegister from "./auth/institution/InstitutionRegister.jsx";
 import StudentRegister from "./auth/student/StudentRegister.jsx";
 import UserLogin from "./auth/student/userLogin.jsx";
-import OrganizationRegister from "./auth/student/OrganizationRegister.jsx";
+import OrganizationRegister from "./auth/organization/OrganizationRegister.jsx";
 import Student_dashboard from "./pages/Student_page/Student_dashboard.jsx";
 
 function App() {

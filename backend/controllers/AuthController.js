@@ -2,7 +2,7 @@ import user from '../models/UserModel.js';
 import otpmodel from '../models/Otp.js';
 import jwt from 'jsonwebtoken';
 import generateOtp from '../utils/OtpGenerator.js';
-
+import sendOtpEmail from '../utils/OtpSender.js';
 
 
 export const register = async (
@@ -63,6 +63,16 @@ export const register = async (
         const otp_data = await otpmodel.create(newOtp);
         console.log('OTP saved successfully');
 
+        // Send OTP email to user
+        try {
+            await sendOtpEmail(email, otp);
+
+            console.log('OTP email sent successfully');
+        } catch (emailErr) {
+            console.error('Failed to send OTP email:', emailErr);
+            // Optionally, you can return an error or continue
+        }
+
         console.log(`OTP for ${email}: ${otp}`);
 
         console.log('Saving user to database...');
@@ -121,3 +131,48 @@ export const verifyOtp = async (req , res) => {
     return res.status(500).json({ message: "server error" });
   }
 };
+
+export const login = async (req , res) => {
+    const { email } = req.body;
+
+    try{
+        const findUser = await user.findOne({ email });
+
+        if(!findUser){
+            return res.status(400).json({message : "user not found"});
+        }
+
+        if(!findUser.isverified){
+            return res.status(400).json({message : "user not verified"});
+        }
+
+        while(true){
+            const already_otp_exist = await otpmodel.findOne({email});
+            if(already_otp_exist){
+                await otpmodel.deleteOne({email});
+            }
+            else{
+                break;
+            }
+        }
+
+        const otp = generateOtp();
+        const expiresAt = Date.now() + 10 * 60 * 1000; // otp valid for 10 minutes
+
+        // create new otp
+        const newOtp = new otpmodel({
+            email,
+            otp,
+            expiresAt
+        });
+
+        const otp_data = await otpmodel.create(newOtp);
+
+        console.log(`OTP for ${email}: ${otp}`);
+
+        return res.status(200).json({message : "login successful" , otp : otp_data});
+    }
+    catch(error){
+        return res.status(500).json({message : "server error"});
+    }
+}
