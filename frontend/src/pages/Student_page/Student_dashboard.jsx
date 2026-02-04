@@ -1,13 +1,23 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../../Styles/Student_page_css/Student_dashboard.css'
 
 const Student_dashboard = () => {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    // Clear auth token from localStorage
+    localStorage.removeItem('token')
+    
+    // Navigate to landing page
+    navigate('/')
+  }
 
   return (
     <>
         <div className='student-dashboard-nav'>
           <nav>Student Dashboard</nav>
-          <button className='btn btn-primary'>Log out</button>
+          <button className='btn btn-primary' onClick={handleLogout}>Log out</button>
         </div>
 
         <div className='student-dashboard-stats'>
