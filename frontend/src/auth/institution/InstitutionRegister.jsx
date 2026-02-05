@@ -12,11 +12,16 @@ export default function InstitutionRegister() {
   let [pwd2, setPwd2] = useState("");
   let navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     if (!name || !phoneNumber || !email || !pwd1) {
       alert("Please fill all the fields");
+      return;
+    }
+
+    if (pwd1 !== pwd2) {
+      alert("Passwords do not match");
       return;
     }
 
@@ -29,13 +34,13 @@ export default function InstitutionRegister() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
-        data,
+        "http://localhost:3000/api/auth/institution-register",
+        data
       );
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         alert("Registration Successful");
-        navigate("/institution-register");
+        navigate("/institution-login");
       }
     } catch (err) {
       console.log(err);
@@ -65,7 +70,7 @@ export default function InstitutionRegister() {
           </div>
           <div>
             <input
-              type="url"
+              type="tel"
               value={phoneNumber}
               placeholder="+91 9789123456"
               name="phoneNumber"
@@ -122,7 +127,7 @@ export default function InstitutionRegister() {
           Already have Account?{" "}
           <span
             style={{ color: "blue", cursor: "pointer" }}
-            onClick={() => navigate("/user-login")}
+            onClick={() => navigate("/institution-login")}
           >
             Login
           </span>
@@ -133,7 +138,7 @@ export default function InstitutionRegister() {
           style={{
             marginLeft: "200px",
           }}
-          onClick={(e) => handleLogin(e)}
+          onClick={(e) => handleRegister(e)}
         >
           Submit
         </button>
