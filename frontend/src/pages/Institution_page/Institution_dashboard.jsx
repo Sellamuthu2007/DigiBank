@@ -2,12 +2,12 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../../Styles/Student_page_css/Student_dashboard.css'
 
-const Student_dashboard = () => {
+const Institution_dashboard = () => {
   const navigate = useNavigate()
 
   React.useEffect(() => {
     const userType = localStorage.getItem('userType')
-    if (!userType || userType !== 'student') {
+    if (!userType || userType !== 'institution') {
       navigate('/')
     }
   }, [navigate])
@@ -24,7 +24,7 @@ const Student_dashboard = () => {
   return (
     <>
         <div className='student-dashboard-nav'>
-          <nav>Student Dashboard</nav>
+          <nav>Institution Dashboard</nav>
           <button className='btn btn-primary' onClick={handleLogout}>Log out</button>
         </div>
 
@@ -64,7 +64,7 @@ const Student_dashboard = () => {
               <h4>Pending Approvals</h4>
             </div>
             <div className='action-card'>
-              <h4>Institution Message</h4>
+              <h4>Student Message</h4>
             </div>
         </div>
          
@@ -73,4 +73,4 @@ const Student_dashboard = () => {
   )
 }
 
-export default Student_dashboard
+export default Institution_dashboard

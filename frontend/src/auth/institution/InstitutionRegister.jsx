@@ -35,7 +35,7 @@ export default function InstitutionRegister() {
 
       if (response.status === 201) {
         alert("Registration Successful");
-        navigate("/institution-register");
+        navigate("/institution-login");
       }
     } catch (err) {
       console.log(err);
@@ -122,7 +122,7 @@ export default function InstitutionRegister() {
           Already have Account?{" "}
           <span
             style={{ color: "blue", cursor: "pointer" }}
-            onClick={() => navigate("/user-login")}
+            onClick={() => navigate("/institution-login")}
           >
             Login
           </span>

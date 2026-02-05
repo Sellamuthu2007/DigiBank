@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../Styles/loginForm.css";
 
-export default function UserLogin() {
+export default function InstitutionLogin() {
   const [email, setEmail] = useState("");
   const [OTP, setOTP] = useState("");
   const [emailEntered, setEmailEntered] = useState(false);
@@ -54,9 +54,9 @@ export default function UserLogin() {
 
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userType", "student");
+        localStorage.setItem("userType", "institution");
         alert("Login successful");
-        navigate("/student-dashboard");
+        navigate("/institution-dashboard");
       }
     } catch (err) {
       alert("Invalid OTP");
@@ -75,7 +75,7 @@ export default function UserLogin() {
         <input
           type="email"
           value={email}
-          placeholder="johndoe@gmail.com"
+          placeholder="institution@gmail.com"
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
