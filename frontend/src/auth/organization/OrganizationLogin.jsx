@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "../../Styles/loginForm.css";
 
-export default function InstitutionLogin() {
+export default function OrganizationLogin() {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
 
@@ -21,14 +21,14 @@ export default function InstitutionLogin() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/institution-login",
+        "http://localhost:3000/api/auth/organization-login",
         { email , password}
       );
 
 
       if (response.status === 200) {
         const token = response.data.token;
-        localStorage.setItem("institutionToken", token);
+        localStorage.setItem("organizationToken", token);
         console.log(token)
         alert("Login successful");
       }

@@ -1,6 +1,7 @@
 import user from '../models/student/UserModel.js';
 import otpmodel from '../models/Otp.js';
 import Institution_user from '../models/Institution/InstitutionUser.js'
+import organization_user from '../models/Organization/OrganizationUser.js'
 import jwt from 'jsonwebtoken';
 import generateOtp from '../utils/OtpGenerator.js';
 import sendOtpEmail from '../utils/OtpSender.js';
@@ -247,9 +248,87 @@ export const Institution_login = async (req,res) => {
             return res.status(400).json({message : 'password is incorrect try again'});
         }
 
-        return res.status(200).json({message : 'login successful'});
+         const token = jwt.sign(
+            {userId : findUser._id},
+            process.env.JWT_SECRET || "fallback_secret",
+            {expiresIn: '1h'},
+        )
+
+        console.log(token)
+
+        return res.status(200).json({message : 'login successful', token});
     }
     catch(err){
         return res.status(500).json({message : "server error"});
     }
+}
+
+
+// register and login for organization can be implemented in similar way as institution with some changes in model and controller
+
+export const organization_register = async (req , res) => {
+    const {name , phoneNumber , email , password} = req.body;
+
+    try{
+       const existingPhone = await organization_user.findOne({phone_number: phoneNumber});
+
+       if(existingPhone){
+        return res.status(400).json({message : 'user with phone already exists'});
+       }
+
+       const existingEmail = await organization_user.findOne({email});
+
+       if(existingEmail){
+        return res.status(400).json({message : 'user with this mail already exists'});
+       }
+
+         //creating a new organization user
+
+         const new_organization = new organization_user({
+            name,
+            phone_number: phoneNumber,
+            email,
+            password
+         });
+
+        //save user to database
+        const savedUser = await new_organization.save();
+
+        //user created send response
+        return res.status(200).json({message : 'user created successfully' , user : savedUser});
+    }
+    catch(err){
+        return res.status(500).json({message : 'server error'});
+    }
+}
+
+
+export const organization_login = async (req,res) => {
+     const {email , password} = req.body;
+
+     try{
+        const findUser = await organization_user.findOne({email});
+
+        if(!findUser){
+            return res.status(400).json({message : 'user with this mail not exists'});
+        }
+
+        //check password
+        if(findUser.password !== password){
+            return res.status(400).json({message : 'password is incorrect try again'});
+        }
+
+          const token = jwt.sign(
+            {userId : findUser._id},
+            process.env.JWT_SECRET || "fallback_secret",
+            {expiresIn: '1h'},
+        )
+
+        console.log(token)
+
+        return res.status(200).json({message : 'login successful', token});
+     }
+     catch(err){
+        return res.status(500).json({message : "server error"});
+     }
 }
