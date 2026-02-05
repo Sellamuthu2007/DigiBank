@@ -9,12 +9,14 @@ const organization_schema = new mongoose.Schema(
        
         phone_number: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
 
         email: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
 
         password: {
@@ -25,4 +27,8 @@ const organization_schema = new mongoose.Schema(
 
     {timestamps : true}
 )
+
+const organization_user = mongoose.model('organization_user' , organization_schema);
+
+export default organization_user;
 
