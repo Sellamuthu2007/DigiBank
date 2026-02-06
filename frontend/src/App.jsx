@@ -3,6 +3,7 @@ import SecondHero from "./pages/landingPage.jsx";
 import Notfound from "./pages/NotFound.jsx";
 import { BrowserRouter as Router , Routes , Route } from 'react-router-dom';
 import InstitutionRegister from "./auth/institution/InstitutionRegister.jsx";
+import InstitutionLogin from "./auth/institution/InstitutionLogin.jsx"
 import StudentRegister from "./auth/student/StudentRegister.jsx";
 import UserLogin from "./auth/student/userLogin.jsx";
 import InstitutionLogin from "./auth/institution/InstitutionLogin.jsx";
@@ -19,6 +20,7 @@ function App() {
         <Route path='/' element={<SecondHero/>} errorElement={<Notfound/>}/>
         <Route path='/student-register' element={<StudentRegister/>}/>
         <Route path='/institution-register' element={<InstitutionRegister/>}/>
+        <Route path='/institution-login' element={<InstitutionLogin/>}/>
         <Route path='/user-login' element={<UserLogin/>}/>
         <Route path='/institution-login' element={<InstitutionLogin/>}/>
         <Route path='/organization-register' element={<OrganizationRegister/>}/>

@@ -1,16 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../Styles/loginForm.css";
 
 export default function OrganizationLogin() {
   const [email, setEmail] = useState("");
-  const [OTP, setOTP] = useState("");
-  const [emailEntered, setEmailEntered] = useState(false);
+  const [password, setpassword] = useState("");
 
-  const navigate = useNavigate();
-
-  const handleEmailSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email) {
@@ -18,51 +14,30 @@ export default function OrganizationLogin() {
       return;
     }
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        { email }
-      );
-
-      const res_data = response.data.otp;
-
-      console.log("OTP for testing purposes:", res_data.otp);
-
-      if (response.status === 200) {
-        setEmailEntered(true);
-        alert("OTP sent to email");
-      }
-    } catch (err) {
-      alert("Failed to send OTP");
-      console.log(err.response?.data || err.message);
-    }
-  };
-
-  const handleOTPSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!OTP) {
-      alert("Please enter OTP");
+    if (!password) {
+      alert("Please enter password");
       return;
     }
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/verify-otp",
-        { email, otp: OTP }
+        "http://localhost:3000/api/auth/organization-login",
+        { email , password}
       );
 
+
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userType", "organization");
+        const token = response.data.token;
+        localStorage.setItem("organizationToken", token);
+        console.log(token)
         alert("Login successful");
-        navigate("/organization-dashboard");
       }
     } catch (err) {
-      alert("Invalid OTP");
       console.log(err.response?.data || err.message);
     }
   };
+
+
 
   return (
     <form
@@ -75,27 +50,20 @@ export default function OrganizationLogin() {
         <input
           type="email"
           value={email}
-          placeholder="organization@gmail.com"
+          placeholder="johndoe@gmail.com"
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
-
-      {emailEntered && (
         <div className="formElements" id="login1">
-          <h5>Enter OTP</h5>
+          <h5>Enter password</h5>
           <input
-            type="text"
-            value={OTP}
-            onChange={(e) => setOTP(e.target.value)}
+            type="password"
+            value={password}
+            onChange={(e) => setpassword(e.target.value)}
           />
         </div>
-      )}
 
-      {!emailEntered ? (
-        <button onClick={handleEmailSubmit}>Send OTP</button>
-      ) : (
-        <button onClick={handleOTPSubmit}>Verify OTP</button>
-      )}
+        <button onClick={handleSubmit}>Login</button>
     </form>
   );
 }
