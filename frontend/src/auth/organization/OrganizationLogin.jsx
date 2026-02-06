@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../Styles/loginForm.css";
 
 export default function OrganizationLogin() {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,8 +31,10 @@ export default function OrganizationLogin() {
       if (response.status === 200) {
         const token = response.data.token;
         localStorage.setItem("organizationToken", token);
+        localStorage.setItem("userType", "organization");
         console.log(token)
         alert("Login successful");
+        navigate("/organization-dashboard");
       }
     } catch (err) {
       console.log(err.response?.data || err.message);

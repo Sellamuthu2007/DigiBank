@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../Styles/loginForm.css";
 
 export default function InstitutionLogin() {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,8 +31,11 @@ export default function InstitutionLogin() {
       if (response.status === 200) {
         const token = response.data.token;
         localStorage.setItem("institutionToken", token);
+        localStorage.setItem("userType", "institution");
         console.log(token)
         alert("Login successful");
+        navigate("/institution-dashboard");
+
       }
     } catch (err) {
       console.log(err.response?.data || err.message);
