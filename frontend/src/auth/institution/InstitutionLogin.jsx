@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../Styles/loginForm.css";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +36,8 @@ export default function InstitutionLogin() {
         console.log(token)
 
         alert("Login successful");
-        navigate('/institution-dashboard');
+        navigate("/institution-dashboard");
+
       }
     } catch (err) {
       console.log(err.response?.data || err.message);

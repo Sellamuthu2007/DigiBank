@@ -14,7 +14,7 @@ const Organization_dashboard = () => {
 
   const handleLogout = () => {
     // Clear auth token from localStorage
-    localStorage.removeItem('token')
+    localStorage.removeItem('organizationToken')
     localStorage.removeItem('userType')
     
     // Navigate to landing page
