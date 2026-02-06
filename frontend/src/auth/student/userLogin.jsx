@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../Styles/loginForm.css";
 
+
 export default function UserLogin() {
   const [email, setEmail] = useState("");
   const [OTP, setOTP] = useState("");
@@ -29,8 +30,10 @@ export default function UserLogin() {
       console.log("OTP for testing purposes:", res_data.otp);
 
       if (response.status === 200) {
+        
         setEmailEntered(true);
         alert("OTP sent to email");
+
       }
     } catch (err) {
       alert("Failed to send OTP");
@@ -45,13 +48,11 @@ export default function UserLogin() {
       alert("Please enter OTP");
       return;
     }
-
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/verify-otp",
         { email, otp: OTP }
       );
-
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userType", "student");

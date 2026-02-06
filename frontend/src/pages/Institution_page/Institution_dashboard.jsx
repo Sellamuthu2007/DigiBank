@@ -1,76 +1,45 @@
-import React from 'react'
+import { use } from 'react'
+import './Institution_Dashboard.css'
 import { useNavigate } from 'react-router-dom'
-import '../../Styles/Student_page_css/Student_dashboard.css'
 
-const Institution_dashboard = () => {
-  const navigate = useNavigate()
-
-  React.useEffect(() => {
-    const userType = localStorage.getItem('userType')
-    if (!userType || userType !== 'institution') {
-      navigate('/')
-    }
-  }, [navigate])
-
-  const handleLogout = () => {
-    // Clear auth token from localStorage
-    localStorage.removeItem('institutionToken')
-    localStorage.removeItem('userType')
-    
-    // Navigate to landing page
-    navigate('/')
-  }
-
+export default function Institution_dashboard(){
+  const navigate = useNavigate();
   return (
     <>
-        <div className='student-dashboard-nav'>
-          <nav>Institution Dashboard</nav>
-          <button className='btn btn-primary' onClick={handleLogout}>Log out</button>
+      <div class = 'institution-header' id='h-20'>
+        <div><h4>IIT Madras</h4></div>
+        <div class = 'header-profile'>
+          <div><i class="bi bi-person-check"></i></div>
+          <div><p>Profile</p></div>
         </div>
-
-        <div className='student-dashboard-stats'>
-          <div className='stat-card'>
-            <h3>Total Certificates</h3>
-            <p>15</p>
-          </div>
-          <div className='stat-card'>
-            <h3>Verified Certificates</h3>  
-            <p>10</p>
-          </div>
-          <div className='stat-card'>
-            <h3>Pending Certificates</h3>
-            <p>5</p>
-          </div>
-          <div className='stat-card'>
-            <h3>shared with Employer</h3>
-            <p>0</p>
-          </div>
-        </div>
-
-        <div className='student-dashboard-actions'>
-           <div className='action-card'>
-              <h4>Request Certificates</h4>
-           </div>
-           <div className='action-card'>
-              <h4>My Certificates</h4>
-           </div>
-            <div className='action-card'>
-              <h4>Share Certificate</h4>
+      </div>
+      <div className="institution-Dashboard" id = 'h-80'>
+        <div className = "dashboard-component" onClick = {()=> navigate('/institution-upload')}>
+            <div>
+              <div><i class="bi bi-upload"></i></div>
+              <div><p>Upload Certificate</p></div>
             </div>
-            <div className='action-card'>
-              <h4>Verify Certificate</h4>
+        </div>  
+        <div className = "dashboard-component" onClick = {()=> navigate('/institution-stastics')}>
+            <div>
+              <div><i class="bi bi-graph-up-arrow"></i></div>
+              <div><p>Show Stastics of Certificate</p></div>
             </div>
-            <div className='action-card'>
-              <h4>Pending Approvals</h4>
+        </div>  
+        <div className = "dashboard-component" onClick = {()=> navigate('/institution-incoming-request')}>
+            <div>
+              <div><i class="bi bi-bell"></i></div>
+              <div><p>Incoming Request</p></div>
             </div>
-            <div className='action-card'>
-              <h4>Student Message</h4>
+        </div>  
+        <div className = "dashboard-component" onClick = {()=> navigate('/institution-revoke')}>
+            <div>
+              <div> <i class="bi bi-shield"></i></div>
+              <div><p>Revoke the certificate Issued</p></div>
             </div>
-        </div>
-         
-        
+        </div>  
+              
+      </div>    
     </>
   )
 }
-
-export default Institution_dashboard

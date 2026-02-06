@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 
 let transporter = null;
 
@@ -15,6 +15,7 @@ const getTransporter = () => {
     }
     return transporter;
 };
+
 
 const sendOtpEmail = async (to, otp) => {
     const transporter = getTransporter();
@@ -39,4 +40,3 @@ const sendOtpEmail = async (to, otp) => {
 }
 
 export default sendOtpEmail;
-
