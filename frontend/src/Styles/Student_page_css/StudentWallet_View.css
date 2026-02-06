@@ -1,0 +1,88 @@
+.student-wallet-view {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    text-align: center;
+}
+
+.student-wallet-view h2 {
+    margin-bottom: 10px;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.wallet-section {
+    margin-top: 20px;
+}
+
+.certificate-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.certificate-table th,
+.certificate-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.certificate-table th {
+    background-color: #f5f5f5;
+}
+
+.actions {
+    position: relative;
+}
+
+/* Dropdown */
+.drop-down {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-button {
+    background-color: #2563eb;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #aedbeb;
+    min-width: 140px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    z-index: 1000;
+}
+
+.dropdown-content button {
+    width: 100%;
+    padding: 8px 12px;
+    color: #333;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: #7c9ddf;
+}
+
+.dropdown-content .btn-danger {
+    color: #dc2626;
+}
+
+
+.drop-down:hover .dropdown-content {
+    display: block;
+}
