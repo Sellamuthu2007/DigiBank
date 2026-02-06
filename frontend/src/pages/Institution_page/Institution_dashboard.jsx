@@ -14,7 +14,7 @@ const Institution_dashboard = () => {
 
   const handleLogout = () => {
     // Clear auth token from localStorage
-    localStorage.removeItem('token')
+    localStorage.removeItem('institutionToken')
     localStorage.removeItem('userType')
     
     // Navigate to landing page
