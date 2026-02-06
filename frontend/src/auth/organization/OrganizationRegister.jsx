@@ -29,13 +29,13 @@ export default function OrganizationRegister() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
+        "http://localhost:3000/api/auth/organization-register",
         data,
       );
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         alert("Registration Successful");
-        navigate("/institution-register");
+        navigate("/organization-login");
       }
     } catch (err) {
       console.log(err);
@@ -65,7 +65,7 @@ export default function OrganizationRegister() {
           </div>
           <div>
             <input
-              type="url"
+              type="tel"
               value={phoneNumber}
               placeholder="+91 9789123456"
               name="phoneNumber"
@@ -122,7 +122,7 @@ export default function OrganizationRegister() {
           Already have Account?{" "}
           <span
             style={{ color: "blue", cursor: "pointer" }}
-            onClick={() => navigate("/user-login")}
+            onClick={() => navigate("/organization-login")}
           >
             Login
           </span>

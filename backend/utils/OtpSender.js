@@ -1,14 +1,23 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER, 
-        pass: process.env.EMAIL_PASS, 
+let transporter = null;
+
+const getTransporter = () => {
+    if (!transporter) {
+        console.log('Creating transporter with EMAIL_USER:', process.env.EMAIL_USER);
+        transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER, 
+                pass: process.env.EMAIL_PASS, 
+            }
+        });
     }
-});
+    return transporter;
+};
 
 const sendOtpEmail = async (to, otp) => {
+    const transporter = getTransporter();
     const mailContent = {
         from: process.env.EMAIL_USER,
         to,
