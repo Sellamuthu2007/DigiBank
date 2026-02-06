@@ -53,6 +53,8 @@ export default function UserLogin() {
       );
 
       if (response.status === 200) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userType", "student");
         alert("Login successful");
         navigate("/student-dashboard");
       }
@@ -82,7 +84,7 @@ export default function UserLogin() {
         <div className="formElements" id="login1">
           <h5>Enter OTP</h5>
           <input
-            type="password"
+            type="text"
             value={OTP}
             onChange={(e) => setOTP(e.target.value)}
           />

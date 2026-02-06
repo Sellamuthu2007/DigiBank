@@ -6,9 +6,12 @@ import InstitutionRegister from "./auth/institution/InstitutionRegister.jsx";
 import InstitutionLogin from "./auth/institution/InstitutionLogin.jsx"
 import StudentRegister from "./auth/student/StudentRegister.jsx";
 import UserLogin from "./auth/student/userLogin.jsx";
+import InstitutionLogin from "./auth/institution/InstitutionLogin.jsx";
 import OrganizationRegister from "./auth/organization/OrganizationRegister.jsx";
 import OrganizationLogin from "./auth/organization/OrganizationLogin.jsx";
 import Student_dashboard from "./pages/Student_page/Student_dashboard.jsx";
+import Institution_dashboard from "./pages/Institution_page/Institution_dashboard.jsx";
+import Organization_dashboard from "./pages/Organization_page/Organization_dashboard.jsx";
 
 function App() {
   return (
@@ -19,9 +22,12 @@ function App() {
         <Route path='/institution-register' element={<InstitutionRegister/>}/>
         <Route path='/institution-login' element={<InstitutionLogin/>}/>
         <Route path='/user-login' element={<UserLogin/>}/>
+        <Route path='/institution-login' element={<InstitutionLogin/>}/>
         <Route path='/organization-register' element={<OrganizationRegister/>}/>
         <Route path='/organization-login' element={<OrganizationLogin/>}/>
         <Route path='/student-dashboard' element={<Student_dashboard/>}/>
+        <Route path='/institution-dashboard' element={<Institution_dashboard/>}/>
+        <Route path='/organization-dashboard' element={<Organization_dashboard/>}/>
       </Routes>
    </Router>
   );

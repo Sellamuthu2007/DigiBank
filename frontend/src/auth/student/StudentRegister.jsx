@@ -140,6 +140,7 @@ const StudentRegister = () => {
         />
         I agree that I cannot upload certificates myself
       </label>
+      <p>already have an account? <a href="/user-login">Login</a></p>
 
       <button type="submit" disabled={!form.otpVerified || !form.agree}>
         Create Account

@@ -2,12 +2,12 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../../Styles/Student_page_css/Student_dashboard.css'
 
-const Student_dashboard = () => {
+const Organization_dashboard = () => {
   const navigate = useNavigate()
 
   React.useEffect(() => {
     const userType = localStorage.getItem('userType')
-    if (!userType || userType !== 'student') {
+    if (!userType || userType !== 'organization') {
       navigate('/')
     }
   }, [navigate])
@@ -24,7 +24,7 @@ const Student_dashboard = () => {
   return (
     <>
         <div className='student-dashboard-nav'>
-          <nav>Student Dashboard</nav>
+          <nav>Organization Dashboard</nav>
           <button className='btn btn-primary' onClick={handleLogout}>Log out</button>
         </div>
 
@@ -42,7 +42,7 @@ const Student_dashboard = () => {
             <p>5</p>
           </div>
           <div className='stat-card'>
-            <h3>shared with Employer</h3>
+            <h3>shared with Employees</h3>
             <p>0</p>
           </div>
         </div>
@@ -64,7 +64,7 @@ const Student_dashboard = () => {
               <h4>Pending Approvals</h4>
             </div>
             <div className='action-card'>
-              <h4>Institution Message</h4>
+              <h4>Employee Message</h4>
             </div>
         </div>
          
@@ -73,4 +73,4 @@ const Student_dashboard = () => {
   )
 }
 
-export default Student_dashboard
+export default Organization_dashboard

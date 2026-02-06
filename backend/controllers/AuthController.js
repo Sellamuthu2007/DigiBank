@@ -167,6 +167,11 @@ export const login = async (req , res) => {
             otp,
             expiresAt
         });
+        sendOtpEmail(email, otp).then(() => {
+            console.log('OTP email sent successfully');
+        }).catch((emailErr) => {
+            console.error('Failed to send OTP email:', emailErr);
+        }); 
 
         const otp_data = await otpmodel.create(newOtp);
 
