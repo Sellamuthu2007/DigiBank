@@ -1,70 +1,202 @@
-.student-dashboard-nav nav{
-    background-color: #f5f5f5;
+/* ====== LAYOUT ====== */
+.student-dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f3f4f6;
+}
+
+/* ====== SIDEBAR ====== */
+.student-dashboard-sidebar {
+    background-color: #e9ecf0;
+    color: #171515;
+    transition: width 0.3s ease;
+    overflow: hidden;
+}
+
+.student-dashboard-sidebar.open {
+    width: 220px;
+}
+
+.student-dashboard-sidebar.closed {
+    width: 70px; /* ✅ FIXED */
+}
+
+.student-dashboard-sidebar h3 {
     padding: 20px;
-    text-align: center;
-    font-size: 24px;
+    font-size: 18px;
+}
+
+.student-dashboard-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.student-dashboard-sidebar li {
+    padding: 12px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.student-dashboard-sidebar li:hover {
+    background-color: #a6bee3;
+}
+
+/* Hide text when sidebar is closed */
+.student-dashboard-sidebar.closed h3,
+.student-dashboard-sidebar.closed li {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ====== CONTENT ====== */
+.student-dashboard-content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* ====== NAVBAR (FIXED) ====== */
+.student-dashboard-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ebf0f1;
+    padding: 14px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* LEFT SIDE */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-left nav {
+    font-size: 22px;
     font-weight: bold;
-    color: #333;
-    
+    color: #0a0909;
 }
 
-.student-dashboard-nav .btn{
-    position: absolute;
-    right: 20px;
-    top: 20px;
+.nav-left i {
+    font-size: 26px;
+    cursor: pointer;
 }
 
-.student-dashboard-stats{
-    display:flex;
+/* RIGHT SIDE */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-right i {
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.nav-right button {
+    padding: 6px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2563eb;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-right button:hover {
+    background-color: #1e4bb8;
+}
+
+/* ====== STATS ====== */
+.student-dashboard-stats {
+    display: flex;
     justify-content: space-around;
     margin-top: 40px;
+    flex-wrap: wrap;
 }
 
-.stat-card{
+.stat-card {
     background-color: #d5f4f9;
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
-    width: 300px;
-    height: auto;
+    width: 260px;
+    margin: 10px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.stat-card h3{
-    font-size: 20px;
+.stat-card h3 {
+    font-size: 18px;
     margin-bottom: 10px;
     color: #555;
 }
 
-.stat-card p{
-    font-size: 36px;
+.stat-card p {
+    font-size: 32px;
     font-weight: bold;
     color: #222;
 }
 
-.student-dashboard-actions{
+/* ====== ACTION CARDS ====== */
+.student-dashboard-actions {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     margin-top: 50px;
 }
 
-.action-card{
+.action-card {
     background-color: #cdcaca;
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
     width: 200px;
-    height: auto;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin: 0 15px;
+    margin: 15px;
     cursor: pointer;
-    transition: transform 0.2s;
-    text-size-adjust:auto;
+    transition: transform 0.2s, background-color 0.2s;
 }
 
-.action-card:hover{
+.action-card:hover {
     transform: translateY(-5px);
     background-color: #b0a8a8;
+}
+
+/* ====== WALLET ROW ====== */
+.student-dashboard-wallet-row {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.student-dashboard-wallet-left {
+    flex: 2;
+    background-color: #ebe2e2;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.student-dashboard-wallet-right {
+    flex: 1;
+    background-color: #cdcaca;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .student-dashboard-sidebar.open {
+        width: 180px;
+    }
+
+    .student-dashboard-wallet-row {
+        flex-direction: column;
+    }
 }
