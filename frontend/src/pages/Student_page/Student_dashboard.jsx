@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../../Styles/Student_page_css/Student_dashboard.css'
+import StudentWallet_View from '../../components/student/StudentWallet_View'
 
 const Student_dashboard = () => {
   const navigate = useNavigate()
@@ -67,8 +68,10 @@ const Student_dashboard = () => {
               <h4>Institution Message</h4>
             </div>
         </div>
-         
-        
+
+        <div className='student-dashboard-wallet'>
+          <StudentWallet_View />
+        </div>
     </>
   )
 }
