@@ -6,6 +6,7 @@ import { BrowserRouter as Router , Routes , Route } from 'react-router-dom';
 import InstitutionRegister from "./auth/institution/InstitutionRegister.jsx";
 import InstitutionLogin from "./auth/institution/InstitutionLogin.jsx";
 import Institution_dashboard from "./pages/Institution_page/Institution_dashboard.jsx";
+import InstitutionUpload from './pages/Institution_page/Institution_upload.jsx';
 
 import StudentRegister from "./auth/student/StudentRegister.jsx";
 import UserLogin from "./auth/student/userLogin.jsx";
@@ -29,6 +30,7 @@ function App() {
         <Route path='/institution-register' element={<InstitutionRegister/>}/>
         <Route path='/institution-login' element={<InstitutionLogin/>}/>
         <Route path='/institution-dashboard' element={<Institution_dashboard/>}/>
+        <Route path = '//institution-dashboard/upload' element = {<InstitutionUpload/>}/>
         
         <Route path='/organization-register' element={<OrganizationRegister/>}/>
         <Route path='/organization-login' element={<OrganizationLogin/>}/>

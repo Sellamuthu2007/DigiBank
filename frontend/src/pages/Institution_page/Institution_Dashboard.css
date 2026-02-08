@@ -57,3 +57,21 @@
 .dashboard-component  p{
     font-size : 20px;
 }
+
+.upload-page{
+    border-radius : 30px;
+    margin-top : 50px;
+    margin-bottom : auto;
+    margin-left : 450px;
+    display : flex;
+    width : 500px;
+    height : 500px;
+    background: #000;
+}
+.upload-from{
+   
+}
+#upload-field{
+    height : 250px;
+    width : 250px;
+}

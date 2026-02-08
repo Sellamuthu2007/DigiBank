@@ -14,7 +14,7 @@ export default function Institution_dashboard(){
         </div>
       </div>
       <div className="institution-Dashboard" id = 'h-80'>
-        <div className = "dashboard-component" onClick = {()=> navigate('/institution-upload')}>
+        <div className = "dashboard-component" onClick = {()=> navigate('/institution-dashboard/upload')}>
             <div>
               <div><i class="bi bi-upload"></i></div>
               <div><p>Upload Certificate</p></div>
