@@ -177,11 +177,11 @@ Mobile application
 Government & enterprise onboarding
 
 👥 Contributors
-Name	Role
-Sellamuthu	Project Lead
-Team Member 2	Frontend
-Team Member 3	Backend
-Team Member 4	Blockchain
+Name	                  Role
+R Sellamuthu	       UI/Flow management
+S Senthamizhselvan   Frontend/Workflow/Database Management
+J Logeshwaran        Blockchain/Security management
+V Jack               Backend/Rest API/Data Handling
 📜 License
 This project is licensed under the MIT License.
 ```
