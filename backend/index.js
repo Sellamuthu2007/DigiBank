@@ -4,6 +4,7 @@ dotenv.config();
 import express from 'express'
 import cors from 'cors';
 import authRoutes from './routes/AuthRoutes.js';
+import certificateRoutes from './routes/CertificateRoutes.js';
 import connectDB from './config/db.js';
 
 connectDB();
@@ -20,6 +21,7 @@ app.use(cors(
    }
 ))
 app.use('/api/auth' , authRoutes)
+app.use('/api/certificates' , certificateRoutes)
 
 app.get('/' , (req,res) => {
     res.send("welcome to coe project");

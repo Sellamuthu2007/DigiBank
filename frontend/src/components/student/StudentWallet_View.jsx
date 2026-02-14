@@ -24,6 +24,7 @@ const StudentWallet_View = () => {
       issueYear: 2025,
       status: "Revoked",
     },
+    
   ];
 
   return (

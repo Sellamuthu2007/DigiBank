@@ -55,6 +55,7 @@ export default function UserLogin() {
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userType", "student");
+        localStorage.setItem("studentEmail", email);
         alert("Login successful");
         navigate("/student-dashboard");
       }

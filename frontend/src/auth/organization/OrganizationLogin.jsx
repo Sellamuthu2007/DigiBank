@@ -37,7 +37,9 @@ export default function OrganizationLogin() {
         navigate("/organization-dashboard");
       }
     } catch (err) {
-      console.log(err.response?.data || err.message);
+      console.log('Full error:', err);
+      console.log('Error response:', err.response?.data);
+      alert(err.response?.data?.message || "Login failed");
     }
   };
 

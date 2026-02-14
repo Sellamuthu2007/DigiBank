@@ -56,9 +56,11 @@ const StudentRegister = () => {
 
       if(response.status === 200){
         console.log("OTP verified and token stored");
+        localStorage.setItem("studentEmail", form.email);
       }
 
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("studentEmail", form.email);
 
       setForm({ ...form, otpVerified: true });
       alert("OTP verified");

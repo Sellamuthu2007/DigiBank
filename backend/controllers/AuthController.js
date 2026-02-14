@@ -311,8 +311,12 @@ export const organization_register = async (req , res) => {
 export const organization_login = async (req,res) => {
      const {email , password} = req.body;
 
+     console.log('Organization login attempt:', { email, password });
+
      try{
         const findUser = await organization_user.findOne({email});
+
+        console.log('User found:', findUser ? 'YES' : 'NO');
 
         if(!findUser){
             return res.status(400).json({message : 'user with this mail not exists'});
@@ -334,6 +338,31 @@ export const organization_login = async (req,res) => {
         return res.status(200).json({message : 'login successful', token});
      }
      catch(err){
+        console.error('Organization login error:', err);
         return res.status(500).json({message : "server error"});
      }
 }
+
+// Get institution details by email
+export const getInstitutionDetails = async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        const institution = await Institution_user.findOne({ email });
+        
+        if (!institution) {
+            return res.status(404).json({ message: 'Institution not found' });
+        }
+
+        return res.status(200).json({ 
+            institution: {
+                _id: institution._id,
+                name: institution.name,
+                email: institution.email,
+                phone_number: institution.phone_number
+            }
+        });
+    } catch (err) {
+        return res.status(500).json({ message: 'Server error' });
+    }
+};
