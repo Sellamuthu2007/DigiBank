@@ -52,6 +52,7 @@ const OrganizationDashboardEnhanced = () => {
         valid: false,
         message: 'Certificate not found or error occurred',
       });
+      console.log(error);
     } finally {
       setLoading(false);
     }

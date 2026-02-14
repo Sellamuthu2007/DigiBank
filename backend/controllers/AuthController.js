@@ -6,131 +6,86 @@ import jwt from 'jsonwebtoken';
 import generateOtp from '../utils/OtpGenerator.js';
 import sendOtpEmail from '../utils/OtpSender.js';
 
+export const register = async (req, res) => {
+  const { username, email, phone } = req.body;
 
-export const register = async (
-    req , res) => {
-    const {username , email , phone } = req.body;
+  try {
+    // Check if user exists
+    let existingUser = await User.findOne({ email });
 
-    try{
-        // check if user already exists
-        console.log('Checking existing user with email:', email);
-        const existingUser = await user.findOne({ email });
-        if(existingUser){
-            console.log('User already exists with email:', email);
-            return res.status(400).json({message : 'User already exists'});
-        }
-
-        // Check for existing phone
-        console.log('Checking existing phone:', phone);
-        const existingPhone = await user.findOne({ phone });
-        if(existingPhone){
-            console.log('Phone already exists:', phone);
-            return res.status(400).json({message : 'Phone number already exists'});
-        }
-
-        // check if it has any otp with same email
-        while(true){
-            const already_otp_exist = await otpmodel.findOne({email});
-            if(already_otp_exist){
-                await otpmodel.deleteOne({email});
-            }
-            else{
-                break;
-            }
-        } 
-
-
-        // create new user
-        console.log('Creating new user object...');
-        const newUser = new user({
-            username,
-            email,
-            phone,
-            isverified: false
-        });
-
-        console.log('Generating OTP...');
-        const otp = generateOtp();
-        
-        const expiresAt = Date.now() + 10 * 60 * 1000; // otp valid for 10 minutes
-        
-        console.log('Creating OTP object...');
-        const newOtp = new otpmodel({
-            email,
-            otp,
-            expiresAt
-        });
-
-        console.log('Saving OTP to database...');
-        const otp_data = await otpmodel.create(newOtp);
-        console.log('OTP saved successfully');
-
-        // Send OTP email to user
-        try {
-            await sendOtpEmail(email, otp);
-
-            console.log('OTP email sent successfully');
-        } catch (emailErr) {
-            console.error('Failed to send OTP email:', emailErr);
-            // Optionally, you can return an error or continue
-        }
-
-        console.log(`OTP for ${email}: ${otp}`);
-
-        console.log('Saving user to database...');
-        const usercreated = await user.create(newUser);
-        console.log('User saved successfully');
-
-        return res.status(201).json({message : "user registered successfully" , user : usercreated , otp : otp_data});
+    // Create user ONLY if not exists
+    if (!existingUser) {
+      existingUser = await User.create({
+        username,
+        email,
+        phone,
+        isverified: false,
+      });
     }
-    catch(error){
-        console.log('Error during registration:', error);
-        return res.status(500).json({message : 'Server error'});
-    }
+
+    // Remove old OTP if exists
+    await Otp.deleteMany({ email });
+
+    // Generate OTP
+    const otp = generateOtp().toString();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+
+    // Save OTP
+    await Otp.create({ email, otp, expiresAt });
+
+    // Send Email
+    await sendOtpEmail(email, otp);
+
+    console.log(`OTP for ${email}: ${otp}`);
+
+    return res.status(200).json({
+      message: "OTP sent successfully",
+    });
+  } catch (error) {
+    console.error("Register error:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
 };
 
-export const verifyOtp = async (req , res) => {
+export const verifyOtp = async (req, res) => {
   const { email, otp } = req.body;
 
-    try{
-        // find user by email
-        const findotp = await otpmodel.findOne({ email });
-        const findUser = await user.findOne({ email });
+  try {
+    const otpRecord = await Otp.findOne({ email });
+    const user = await User.findOne({ email });
 
-        if(!findUser){
-            return res.status(400).json({message : "user not found"});
-        } 
+    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!otpRecord) return res.status(400).json({ message: "OTP not found" });
 
-        if(!findotp){
-            return res.status(400).json({message : "otp not found"});
-        }
-        
-        //verify otp
-        if(findotp.expiresAt < Date.now()){
-            await otpmodel.deleteOne({email});
-            return res.status(400).json({message: "otp expired"});
-        }
-
-        //check otp
-        if(String(findotp.otp) !== String(otp)){
-            return res.status(400).json({message: "invalid otp"});
-        }
-
-         //otp is valid , update user isverified to true
-         await user.updateOne({email } , {isverified : true});
-         await otpmodel.deleteOne({email});
-
-          const token = jwt.sign(
-            {userId : findUser._id},
-            process.env.JWT_SECRET || "fallback_secret",
-            {expiresIn: '1h'},
-        )
-         
-        console.log(token);
-        return res.status(200).json({message: "otp verified successfully" , token : token});
+    if (otpRecord.expiresAt < Date.now()) {
+      await Otp.deleteOne({ email });
+      return res.status(400).json({ message: "OTP expired" });
     }
-  catch (err) {
-    return res.status(500).json({ message: "server error" });
+
+    if (String(otpRecord.otp) !== String(otp)) {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+
+    // OTP valid → verify user
+    user.isverified = true;
+    await user.save();
+
+    // Delete OTP after success
+    await Otp.deleteOne({ email });
+
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET || "fallback_secret",
+      { expiresIn: "1h" }
+    );
+
+    return res.status(200).json({
+      message: "OTP verified successfully",
+      token,
+    });
+  } catch (err) {
+    console.error("Verify OTP error:", err);
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -151,10 +106,10 @@ export const login = async (req , res) => {
         while(true){
             const already_otp_exist = await otpmodel.findOne({email});
             if(already_otp_exist){
-                await otpmodel.deleteOne({email});
+              await otpmodel.deleteOne({email});
             }
             else{
-                break;
+              break;
             }
         }
 
