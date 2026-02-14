@@ -32,7 +32,22 @@ export default function InstitutionLogin() {
         const token = response.data.token;
         localStorage.setItem("institutionToken", token);
         localStorage.setItem("userType", "institution");
+        localStorage.setItem("institutionEmail", email);
         console.log(token)
+
+        // Fetch institution details to get ID and name
+        try {
+          const institutionResponse = await axios.get(
+            `http://localhost:3000/api/auth/institution-details/${email}`
+          );
+          
+          if (institutionResponse.data.institution) {
+            localStorage.setItem("institutionId", institutionResponse.data.institution._id);
+            localStorage.setItem("institutionName", institutionResponse.data.institution.name);
+          }
+        } catch (detailsError) {
+          console.error('Error fetching institution details:', detailsError);
+        }
 
         alert("Login successful");
         navigate("/institution-dashboard");
@@ -40,6 +55,7 @@ export default function InstitutionLogin() {
       }
     } catch (err) {
       console.log(err.response?.data || err.message);
+      alert("Login failed");
     }
   };
 
